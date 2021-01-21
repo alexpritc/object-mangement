@@ -12,6 +12,9 @@ public class CompositeSpawnArea : SpawnArea
 
     private int nextSequentialIndex;
     
+    [SerializeField]
+    bool overrideConfig;
+    
     public override Vector3 SpawnPoint
     {
         get
@@ -39,5 +42,24 @@ public class CompositeSpawnArea : SpawnArea
 
     public override void Load (GameDataReader reader) {
         nextSequentialIndex = reader.ReadInt();
+    }
+
+    public override void ConfigureSpawn (Shape shape) {
+        if (overrideConfig) {
+            base.ConfigureSpawn(shape);
+        }
+        else {
+            int index;
+            if (isSequential) {
+                index = nextSequentialIndex++;
+                if (nextSequentialIndex >= spawnAreas.Length) {
+                    nextSequentialIndex = 0;
+                }
+            }
+            else {
+                index = Random.Range(0, spawnAreas.Length);
+            }
+            spawnAreas[index].ConfigureSpawn(shape);
+        }
     }
 }
