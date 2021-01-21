@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000004, guid: d5ac7ff2570211047b9e4a2068c60c0e,
+  m_LightingDataAsset: {fileID: 112000004, guid: 48c826aa9ac2cdc4e9b5a1995ebf0cd2,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateOnX: 0
-  rotateOnY: 1
+  rotateOnY: 0
   rotateOnZ: 0
   xSpeed: -0.222
   ySpeed: 0.239
