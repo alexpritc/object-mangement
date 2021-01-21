@@ -3,7 +3,9 @@
 
 <!-- PROJECT GIF -->
 <br />
-<p align="center">
+<p>
   <a href="https://catlikecoding.com/unity/tutorials/object-management/">
     <img src="images/level4.gif" alt="level4" width="800" height="422">
   </a>
+</p>
+<p> [image description: objects initialised in an async scene (the object pool). the game state is saved, resets and then it is loaded from persistent storage.]</p>
