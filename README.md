@@ -9,3 +9,10 @@
   </a>
 </p>
 <p> [image description: objects initialised in an async scene (the object pool). the game state is saved, resets and then it is loaded from persistent storage.]</p>
+
+<!-- CONTACT -->
+## Contact
+
+Alex Pritchard - [@alexpritc](https://twitter.com/alexpritc) - hi@apritc.com
+
+Project Link: [https://github.com/alexpritc/object-management](https://github.com/alexpritc/object-management)
