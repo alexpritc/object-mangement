@@ -1,5 +1,5 @@
 # Object Management in Unity
-### self dev project, following [Catlike Coding](https://catlikecoding.com/unity/tutorials/object-management/)'s written object management tutorials :-)
+Self dev project following [Catlike Coding](https://catlikecoding.com/unity/tutorials/object-management/)'s written object management tutorials :-)
 
 <!-- PROJECT GIF -->
 <br />
@@ -8,7 +8,7 @@
     <img src="images/level4.gif" alt="level4" width="800" height="422">
   </a>
 </p>
-<p> [image description: objects initialised in an async scene (the object pool). the game state is saved, resets and then it is loaded from persistent storage.]</p>
+<p> [Image description: objects initialised in an async scene (the object pool). The game state is saved, then reset, and then the original is loaded from persistent storage.]</p>
 
 <!-- CONTACT -->
 ## Contact
