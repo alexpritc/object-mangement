@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.Experimental.TerrainAPI;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 public class GameManager : PersistableObject
 {
-    private const int saveVersion = 3;
+    private const int saveVersion = 4;
     
     [SerializeField] ShapeManager ShapeManager;
 
@@ -32,7 +33,10 @@ public class GameManager : PersistableObject
 
     private Random.State mainRandomState;
     [SerializeField] private bool reseedOnLoad;
-
+    
+    [SerializeField] Slider creationSpeedSlider;
+    [SerializeField] Slider destructionSpeedSlider;
+    
     private void Awake()
     {
         CreationSpeed = 5f;
@@ -65,20 +69,6 @@ public class GameManager : PersistableObject
 
     void Update()
     {
-        creationProgress += Time.deltaTime * CreationSpeed;
-        while (creationProgress >= 1f)
-        {
-            creationProgress -= 1f;
-            CreateShape();
-        }
-
-        destructionProgress += Time.deltaTime * DestructionSpeed;
-        while (destructionProgress >= 1f)
-        {
-            destructionProgress -= 1f;
-            DestroyShape();
-        }
-        
         if (Input.GetKeyDown(createKey))
         {
             CreateShape();
@@ -121,19 +111,31 @@ public class GameManager : PersistableObject
         }
     }
 
+    private void FixedUpdate()
+    {
+        creationProgress += Time.deltaTime * CreationSpeed;
+        while (creationProgress >= 1f)
+        {
+            creationProgress -= 1f;
+            CreateShape();
+        }
+
+        destructionProgress += Time.deltaTime * DestructionSpeed;
+        while (destructionProgress >= 1f)
+        {
+            destructionProgress -= 1f;
+            DestroyShape();
+        }
+        
+        for (int i = 0; i < shapes.Count; i++) {
+            shapes[i].GameUpdate();
+        }
+    }
+
     void CreateShape()
     {
         Shape instance = ShapeManager.GetRandom();
-        Transform t = instance.transform;
-        t.localPosition = GameLevel.CurrentLevel.SpawnPoint;
-        t.localRotation = Random.rotation;
-        t.localScale = Vector3.one * Random.Range(0.1f, 1f);
-        instance.SetColor(Random.ColorHSV(
-            hueMin: 0f, hueMax: 1f,
-            saturationMin: 0.5f, saturationMax: 1f,
-            valueMin: 0.25f, valueMax: 1f,
-            alphaMin: 1f, alphaMax: 1f
-        ));
+        GameLevel.CurrentLevel.ConfigureSpawn(instance);
         shapes.Add(instance);
     }
 
@@ -155,7 +157,9 @@ public class GameManager : PersistableObject
         int seed = Random.Range(0, int.MaxValue) ^ (int) Time.unscaledTime;
         mainRandomState = Random.state;
         Random.InitState(seed);
-
+        
+        creationSpeedSlider.value = CreationSpeed = 0f;
+        destructionSpeedSlider.value = DestructionSpeed = 0f;
 
         for (int i = 0; i < shapes.Count; i++)
         {
@@ -168,6 +172,10 @@ public class GameManager : PersistableObject
     {
         writer.Write(shapes.Count);
         writer.Write(Random.state);
+        writer.Write(CreationSpeed);
+        writer.Write(creationProgress);
+        writer.Write(DestructionSpeed);
+        writer.Write(destructionProgress);
         writer.Write(loadedLevelBuildIndex);
         GameLevel.CurrentLevel.Save(writer);
         foreach (var instance in shapes)
@@ -204,6 +212,11 @@ public class GameManager : PersistableObject
             {
                 Random.state = state;
             }
+
+            creationSpeedSlider.value = CreationSpeed = reader.ReadFloat();
+            creationProgress = reader.ReadFloat();
+            destructionSpeedSlider.value = DestructionSpeed = reader.ReadFloat();
+            destructionProgress = reader.ReadFloat();
         }
         
         yield return LoadLevel(version < 2 ? 1 : reader.ReadInt());

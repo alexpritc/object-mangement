@@ -1461,3 +1461,5 @@ MonoBehaviour:
   destroyKey: 100
   storage: {fileID: 75111915}
   reseedOnLoad: 1
+  creationSpeedSlider: {fileID: 1270404235}
+  destructionSpeedSlider: {fileID: 1845657853}

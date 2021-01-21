@@ -10,6 +10,7 @@
           <e p="CameraController.cs" t="Include" />
           <e p="CompositeSpawnArea.cs" t="Include" />
           <e p="CubeSpawnArea.cs" t="Include" />
+          <e p="FloatRange.cs" t="Include" />
           <e p="GameDataReader.cs" t="Include" />
           <e p="GameDataWriter.cs" t="Include" />
           <e p="GameLevel.cs" t="Include" />
