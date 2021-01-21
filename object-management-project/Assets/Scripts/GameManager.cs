@@ -108,6 +108,11 @@ public class GameManager : PersistableObject
                 NewGame();
                 StartCoroutine(LoadLevel(3));
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                NewGame();
+                StartCoroutine(LoadLevel(4));
+            }
         }
     }
 
